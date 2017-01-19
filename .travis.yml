@@ -12,11 +12,11 @@ install:
   - cd IncludeOS
   - git checkout dev
   - git submodule update --init --recursive
-  
+
 before_script:
   - cd test
   - mkdir darwin && cd darwin
-  
+
 script:
   - cmake ..
   - make && ./unittests
