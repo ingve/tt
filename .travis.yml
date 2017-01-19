@@ -4,16 +4,19 @@ os: osx
 matrix:
   include:
     - os: osx
-      osx_image: xcode8
+      env: COMPILER='clang++'
+      osx_image: xcode8.2
 
 install:
-  - if ! brew ls --version cmake &>/dev/null; then brew install cmake; fi
+  - if [ $TRAVIS_OS_NAME == osx ]; then brew update ; brew uninstall --force cmake; brew install cmake ; fi
   - git clone https://github.com/hioa-cs/IncludeOS.git
   - cd IncludeOS
   - git checkout dev
   - git submodule update --init --recursive
 
 before_script:
+  - export CXX=$COMPILER
+  - cmake --version
   - cd test
   - mkdir darwin && cd darwin
 
