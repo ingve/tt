@@ -1,18 +1,15 @@
-language: generic
-os: osx
-
 matrix:
   include:
-    - os: osx
-      env: COMPILER='clang++'
-      osx_image: xcode8.2
-    - os: osx
-      env: COMPILER='clang++'
-      osx_image: xcode8
+  - os: osx
+    env: COMPILER='clang++'
+    osx_image: xcode8.2
+  - os: osx
+    env: COMPILER='clang++'
+    osx_image: xcode8
 
 install:
   - if [ $TRAVIS_OS_NAME == osx ]; then brew update ; brew uninstall --force cmake; brew install cmake ; fi
-  - git clone https://github.com/hioa-cs/IncludeOS.git
+  - git clone https://github.com/ingve/IncludeOS
   - cd IncludeOS
   - git checkout dev
   - git submodule update --init --recursive
@@ -26,4 +23,4 @@ before_script:
 
 script:
   - cmake ..
-  - make && ./unittests --pass
+  - make VERBOSE=1 && ./unittests --pass
